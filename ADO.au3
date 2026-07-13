@@ -241,7 +241,7 @@
 	.	Chnaged: $aRocordset >> $aRecordset - Skysnake
 	.
 	.
-	.	!!! REMARK - I'm not sure when this following changes was happend
+	.	!!! REMARK - I'm not sure when this following changes happened
 	.	Removed: Function: _ADO_OpenSchema_Views - MS SQL: Object or provider could not perform requested action - mLipok
 	.		REF: https://msdn.microsoft.com/en-US/library/ee275169(v=bts.10).aspx
 	.			For all DBMS only this four QueryType are common:
@@ -456,8 +456,8 @@
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __ADO_RecordsetArray_Display
 ; Description ...: Displays result array (with _ArrayDisplay) returned by a data set
-; Syntax ........: __ADO_RecordsetArray_Display(Byref $aRecordset[, $sTitle = ''])
-; Parameters ....: $aRecordset          - [in/out] an array of data - fileds name and records taken from recordset.
+; Syntax ........: __ADO_RecordsetArray_Display(ByRef $aRecordset[, $sTitle = ''])
+; Parameters ....: $aRecordset          - [in/out] an array of data - fields name and records taken from recordset.
 ;                  $sTitle              - [optional] a string value. Default is ''.
 ; Return values .: On Success - $ADO_RET_SUCCESS, and return Array size in @extended
 ;                  On Failure - $ADO_RET_FAILURE and set @error to $ADO_ERR_*
@@ -486,8 +486,8 @@ EndFunc   ;==>__ADO_RecordsetArray_Display
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __ADO_RecordsetArray_IsValid
 ; Description ...: Tests that passed array is valid "ADO UDF RecordsetArray"
-; Syntax ........: __ADO_RecordsetArray_IsValid(Byref $aRecordset)
-; Parameters ....: $aRecordset          - [in/out] an array of data - fileds name and records taken from recordset.
+; Syntax ........: __ADO_RecordsetArray_IsValid(ByRef $aRecordset)
+; Parameters ....: $aRecordset          - [in/out] an array of data - fields name and records taken from recordset.
 ; Return values .: On Success - True
 ;                  On Failure - False and set @error to $ADO_ERR_*
 ; Author ........: mLipok
@@ -500,7 +500,7 @@ EndFunc   ;==>__ADO_RecordsetArray_Display
 Func __ADO_RecordsetArray_IsValid(ByRef $aRecordset)
 	If _
 			UBound($aRecordset, $UBOUND_DIMENSIONS) = 1 _
-			And UBound($aRecordset, $UBOUND_ROWS) = $ADO_RS_ARRAY_ENUMCOUNTR _
+			And UBound($aRecordset, $UBOUND_ROWS) = $ADO_RS_ARRAY_ENUMCOUNTER _
 			And $aRecordset[$ADO_RS_ARRAY_GUID] = $ADO_RS_GUID _
 			Then
 		Return SetError($ADO_ERR_SUCCESS, $ADO_EXT_DEFAULT, True)
@@ -511,7 +511,7 @@ EndFunc   ;==>__ADO_RecordsetArray_IsValid
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _ADO_Recordset_Display
 ; Description ...: Display Recordset content with _ArrayDisplay()
-; Syntax ........: _ADO_Recordset_Display(Byref $vRocordset[, $sTitle = ''[, $bFieldNamesInFirstRow = False]])
+; Syntax ........: _ADO_Recordset_Display(ByRef $vRocordset[, $sTitle = ''[, $bFieldNamesInFirstRow = False]])
 ; Parameters ....: $vRocordset          - [in/out] a variant value. Could be object $oRecordset or Array
 ;                  $sTitle              - [optional] a string value. Default is ''.
 ;                  $bFieldNamesInFirstRow- [optional] a boolean value. Default is False.
@@ -541,8 +541,8 @@ EndFunc   ;==>_ADO_Recordset_Display
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _ADO_Recordset_Find
 ; Description ...: Searches a Recordset for the row that satisfies the specified criteria.
-; Syntax ........: _ADO_Recordset_Find(Byref $oRecordset, $Criteria[, $SkipRows = 0[, $SearchDirection = $ADO_adSearchForward[, $Start = $ADO_adBookmarkCurrent]]])
-; Parameters ....: $oRecordset          - [in/out] an object representing ADO Recordset.
+; Syntax ........: _ADO_Recordset_Find(ByRef $oRecordset, $Criteria[, $SkipRows = 0[, $SearchDirection = $ADO_adSearchForward[, $Start = $ADO_adBookmarkCurrent]]])
+; Parameters ....: $oRecordset          - [in/out] an object representing an ADO Recordset.
 ;                  $Criteria            - An unknown value.
 ;                  $SkipRows            - [optional] An unknown value. Default is 0.
 ;                  $SearchDirection     - [optional] An unknown value. Default is $ADO_adSearchForward.
@@ -573,9 +573,9 @@ EndFunc   ;==>_ADO_Recordset_Find
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _ADO_Recordset_ToArray
-; Description ...: Transform $oRecordset to an 2Dimensional Array
-; Syntax ........: _ADO_Recordset_ToArray(Byref $oRecordset[, $bFieldNamesInFirstRow = False])
-; Parameters ....: $oRecordset          - [in/out] an object representing ADO Recordset.
+; Description ...: Transforms $oRecordset to a two-dimensional array
+; Syntax ........: _ADO_Recordset_ToArray(ByRef $oRecordset[, $bFieldNamesInFirstRow = False])
+; Parameters ....: $oRecordset          - [in/out] an object representing an ADO Recordset.
 ;                  $bFieldNamesInFirstRow- [optional] a boolean value. Default is False.
 ; Return values .: On Success - $aResult
 ;                  On Failure - $ADO_RET_FAILURE and set @error to $ADO_ERR_*
@@ -641,7 +641,7 @@ Func _ADO_Recordset_ToArray(ByRef $oRecordset, $bFieldNamesInFirstRow = False)
 			$aFiledNames_Temp[$iCol_idx] = $oRecordset.Fields($iCol_idx).Name
 		Next
 
-		ReDim $aResult[$ADO_RS_ARRAY_ENUMCOUNTR]
+		ReDim $aResult[$ADO_RS_ARRAY_ENUMCOUNTER]
 		$aResult[$ADO_RS_ARRAY_GUID] = $ADO_RS_GUID
 		$aResult[$ADO_RS_ARRAY_FIELDNAMES] = $aFiledNames_Temp
 		$aResult[$ADO_RS_ARRAY_RSCONTENT] = $aRecordset_GetRowsResult
@@ -655,8 +655,8 @@ EndFunc   ;==>_ADO_Recordset_ToArray
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _ADO_Recordset_ToString
 ; Description ...: Convert current recordset Object to String
-; Syntax ........: _ADO_Recordset_ToString(Byref $oRecordset[, $sColDelimeter = "|"[, $bReturnColumnNames = True]])
-; Parameters ....: $oRecordset          - [in/out] an object representing ADO Recordset.
+; Syntax ........: _ADO_Recordset_ToString(ByRef $oRecordset[, $sColDelimeter = "|"[, $bReturnColumnNames = True]])
+; Parameters ....: $oRecordset          - [in/out] an object representing an ADO Recordset.
 ;                  $sColDelimeter       - [optional] string that will separate columns in the returned string. Default is "|".
 ;                  $bReturnColumnNames  - [optional] boolean value that determine if column names should be returned or not. Default is True.
 ; Return values .: On Success - string
@@ -706,7 +706,7 @@ EndFunc   ;==>_ADO_Recordset_ToString
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _ADO_RecordsetArray_GetContent
 ; Description ...: Extract internal "Rows array" from "RecordsetArray"
-; Syntax ........: _ADO_RecordsetArray_GetContent(Byref $aRecordset)
+; Syntax ........: _ADO_RecordsetArray_GetContent(ByRef $aRecordset)
 ; Parameters ....: $aRecordset          - [in/out] an array of unknowns.
 ; Return values .: On Success - array
 ;                  On Failure - $ADO_RET_FAILURE and set @error to $ADO_ERR_*
@@ -727,7 +727,7 @@ EndFunc   ;==>_ADO_RecordsetArray_GetContent
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _ADO_RecordsetArray_GetFieldNames
 ; Description ...: Extract internal FiledNames array with from "RecordsetArray"
-; Syntax ........: _ADO_RecordsetArray_GetFieldNames(Byref $aRecordset)
+; Syntax ........: _ADO_RecordsetArray_GetFieldNames(ByRef $aRecordset)
 ; Parameters ....: $aRecordset          - [in/out] an array of arrays - returned from _ADO_Recordset_ToArray or _ADO_Execute
 ; Return values .: On Success - array
 ;                  On Failure - $ADO_RET_FAILURE and set @error to $ADO_ERR_*
@@ -751,8 +751,8 @@ EndFunc   ;==>_ADO_RecordsetArray_GetFieldNames
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __ADO_Command_IsValid
 ; Description ...: Check if object is 'ADODB.Command'
-; Syntax ........: __ADO_Command_IsValid(Byref $oCommand)
-; Parameters ....: $oCommand            - [in/out] an object representing ADO Command.
+; Syntax ........: __ADO_Command_IsValid(ByRef $oCommand)
+; Parameters ....: $oCommand            - [in/out] an object representing an ADO Command.
 ; Return values .: On Success - True
 ;                  On Failure - False and set @error to $ADO_ERR_*
 ; Author ........: mLipok
@@ -769,9 +769,9 @@ EndFunc   ;==>__ADO_Command_IsValid
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __ADO_Connection_IsReady
-; Description ...: Check if connection object is in ready state: $ADO_adStateOpen, that means "The object is open"
-; Syntax ........: __ADO_Connection_IsReady(Byref $oConnection)
-; Parameters ....: $oConnection         - [in/out] an object representing ADO Connection.
+; Description ...: Checks whether the connection object is in ready state: $ADO_adStateOpen, that means "The object is open"
+; Syntax ........: __ADO_Connection_IsReady(ByRef $oConnection)
+; Parameters ....: $oConnection         - [in/out] an object representing an ADO Connection.
 ; Return values .: On Success - True
 ;                  On Failure - False and set @error to $ADO_ERR_*
 ; Author ........: mLipok
@@ -797,8 +797,8 @@ EndFunc   ;==>__ADO_Connection_IsReady
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __ADO_Connection_IsValid
 ; Description ...: Check if object is valid "ADODB.Connection" object
-; Syntax ........: __ADO_Connection_IsValid(Byref $oConnection)
-; Parameters ....: $oConnection         - [in/out] an object representing ADO Connection.
+; Syntax ........: __ADO_Connection_IsValid(ByRef $oConnection)
+; Parameters ....: $oConnection         - [in/out] an object representing an ADO Connection.
 ; Return values .: On Success - True
 ;                  On Failure - False and set @error to $ADO_ERR_*
 ; Author ........: mLipok
@@ -815,8 +815,8 @@ EndFunc   ;==>__ADO_Connection_IsValid
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __ADO_IsValidObjectType
-; Description ...: Check if object is valid object with proper $sRequiredProgID
-; Syntax ........: __ADO_IsValidObjectType(Byref $oObjectToCheck, $sRequiredProgID)
+; Description ...: Checks whether the object is valid with proper $sRequiredProgID
+; Syntax ........: __ADO_IsValidObjectType(ByRef $oObjectToCheck, $sRequiredProgID)
 ; Parameters ....: $oObjectToCheck      - [in/out] an object.
 ;                  $sRequiredProgID     - a string value.
 ; Return values .: On Success - True
@@ -844,7 +844,7 @@ EndFunc   ;==>__ADO_IsValidObjectType
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: __ADO_MSSQL_CONNECTION_STRING_SQLAuth
-; Description ...: Create connection string for MS SQL using SQL Authentification
+; Description ...: Creates a connection string for MS SQL using SQL Authentication
 ; Syntax ........: __ADO_MSSQL_CONNECTION_STRING_SQLAuth($sServer, $sDataBase, $sUserName, $sPassword[, $sAppName = Default[,
 ;                  $bUseProviderInsteadDriver = True]])
 ; Parameters ....: $sServer             - A string value. The server to connect to.
@@ -859,7 +859,7 @@ EndFunc   ;==>__ADO_IsValidObjectType
 ; Modified ......:
 ; Remarks .......: If $sAppName is specified, this value is stored in the master.dbo.sysprocesses column program_name and is returned by sp_who and the APP_NAME functions.
 ; Related .......:
-; Link ..........: https://msdn.microsoft.com/pl-pl/library/ms130822(v=sql.110).aspx
+; Link ..........: https://msdn.microsoft.com/en-us/library/ms130822(v=sql.110).aspx
 ; Example .......: No
 ; ===============================================================================================================================
 Func __ADO_MSSQL_CONNECTION_STRING_SQLAuth($sServer, $sDataBase, $sUserName, $sPassword, $sAppName = Default, $sWSID = Default, $bUseProviderInsteadDriver = True)
@@ -885,11 +885,11 @@ EndFunc   ;==>__ADO_MSSQL_CONNECTION_STRING_SQLAuth
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __ADO_MSSQL_CONNECTION_STRING_WinAuth
-; Description ...: Create connection string for MS SQL using Windows Authentification
+; Description ...: Creates a connection string for MS SQL using Windows Authentication
 ; Syntax ........: __ADO_MSSQL_CONNECTION_STRING_WinAuth($sServer, $sDataBase[, $sAppName = Default[, $sWSID = Default[,
 ;                  $bUseProviderInsteadDriver = True]]])
 ; Parameters ....: $sServer             - server localization
-;                  $sDataBase           - DataBase name that will be used for connection
+;                  $sDataBase           - database name that will be used for connection
 ;                  $sAppName            - [optional] AppName for SQL Connection list. Default is Default.
 ;                  $sWSID               - [optional] The workstation ID. Default is none.
 ;                  $bUseProviderInsteadDriver- [optional] boolean value that determine kind of MS technology that should be used for this connection. Default is True.
@@ -899,7 +899,7 @@ EndFunc   ;==>__ADO_MSSQL_CONNECTION_STRING_SQLAuth
 ; Remarks .......: If $sAppName is specified, this value is stored in the master.dbo.sysprocesses column program_name and is returned by sp_who and the APP_NAME functions.
 ; Remarks .......:
 ; Related .......:
-; Link ..........: https://msdn.microsoft.com/pl-pl/library/ms130822(v=sql.110).aspx
+; Link ..........: https://msdn.microsoft.com/en-us/library/ms130822(v=sql.110).aspx
 ; Example .......: No
 ; ===============================================================================================================================
 Func __ADO_MSSQL_CONNECTION_STRING_WinAuth($sServer, $sDataBase, $sAppName = Default, $sWSID = Default, $bUseProviderInsteadDriver = True)
@@ -926,7 +926,7 @@ EndFunc   ;==>__ADO_MSSQL_CONNECTION_STRING_WinAuth
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __ADO_Recordset_IsEmpty
 ; Description ...: Check if connection Recordset object content is Empty
-; Syntax ........: __ADO_Recordset_IsEmpty(Byref $oRecordset[, $bPreserve_Errors = True[, $iError = @error[, $iExtended = @extended]]])
+; Syntax ........: __ADO_Recordset_IsEmpty(ByRef $oRecordset[, $bPreserve_Errors = True[, $iError = @error[, $iExtended = @extended]]])
 ; Parameters ....: $oRecordset          - [in/out] an object.
 ;                  $bPreserve_Errors    - [optional] a boolean value. Default is True.
 ;                  $iError              - [optional] an integer value. Default is @error.
@@ -965,8 +965,8 @@ EndFunc   ;==>__ADO_Recordset_IsEmpty
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __ADO_Recordset_IsNotEmpty
 ; Description ...: Check if connection Recordset object content is not Empty
-; Syntax ........: __ADO_Recordset_IsNotEmpty(Byref $oRecordset[, $bPreserve_Errors = False[, $iError = @error[, $iExtended = @extended]]])
-; Parameters ....: $oRecordset          - [in/out] an object representing ADO Recordset.
+; Syntax ........: __ADO_Recordset_IsNotEmpty(ByRef $oRecordset[, $bPreserve_Errors = False[, $iError = @error[, $iExtended = @extended]]])
+; Parameters ....: $oRecordset          - [in/out] an object representing an ADO Recordset.
 ;                  $bPreserve_Errors    - [optional] a boolean value. Default is False.
 ;                  $iError              - [optional] an integer value. Default is @error.
 ;                  $iExtended           - [optional] an integer value. Default is @extended.
@@ -1003,7 +1003,7 @@ EndFunc   ;==>__ADO_Recordset_IsNotEmpty
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __ADO_Recordset_IsReady
 ; Description ...: Check if connection Recordset object state is $ADO_adStateOpen
-; Syntax ........: __ADO_Recordset_IsReady(Byref $oRecordset[, $bPreserve_Errors = False[, $iError = @error[, $iExtended = @extended]]])
+; Syntax ........: __ADO_Recordset_IsReady(ByRef $oRecordset[, $bPreserve_Errors = False[, $iError = @error[, $iExtended = @extended]]])
 ; Parameters ....: $oRecordset         - [in/out] an object.
 ;                  $bPreserve_Errors    - [optional] a boolean value. Default is False.
 ;                  $iError              - [optional] an integer value. Default is @error.
@@ -1040,8 +1040,8 @@ EndFunc   ;==>__ADO_Recordset_IsReady
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __ADO_Recordset_IsValid
 ; Description ...: Check object is valid "ADODB.Recordset" object
-; Syntax ........: __ADO_Recordset_IsValid(Byref $oRecordset[, $bPreserve_Errors = False[, $iError = @error[, $iExtended = @extended]]])
-; Parameters ....: $oRecordset          - [in/out] an object representing ADO Recordset
+; Syntax ........: __ADO_Recordset_IsValid(ByRef $oRecordset[, $bPreserve_Errors = False[, $iError = @error[, $iExtended = @extended]]])
+; Parameters ....: $oRecordset          - [in/out] an object representing an ADO Recordset
 ;                  $bPreserve_Errors    - [optional] a boolean value. Default is False
 ;                  $iError              - [optional] an integer value. Default is @error
 ;                  $iExtended           - [optional] an integer value. Default is @extended
@@ -1063,7 +1063,7 @@ EndFunc   ;==>__ADO_Recordset_IsValid
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _ADO_Command_Create
 ; Description ...: Create Command object
-; Syntax ........: _ADO_Command_Create(Byref $oConnection[, $iCommandType = $ADO_adCmdText])
+; Syntax ........: _ADO_Command_Create(ByRef $oConnection[, $iCommandType = $ADO_adCmdText])
 ; Parameters ....: $oConnection         - [in/out] an object
 ;                  $iCommandType        - [optional] an integer value. Default is $ADO_adCmdText
 ; Return values .: On Success - $oCommand
@@ -1105,8 +1105,8 @@ EndFunc   ;==>_ADO_Command_Create
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _ADO_Command_CreateParameter
 ; Description ...: Creates a new Parameter object with the specified properties.
-; Syntax ........: _ADO_Command_CreateParameter(Byref $oCommand, $sName, $iSize, $vValue[, $iType = $ADO_adChar[, $iDirection = $ADO_adParamInputOutput ]])
-; Parameters ....: $oCommand            - [in/out] an object representing ADO Command.
+; Syntax ........: _ADO_Command_CreateParameter(ByRef $oCommand, $sName, $iSize, $vValue[, $iType = $ADO_adChar[, $iDirection = $ADO_adParamInputOutput ]])
+; Parameters ....: $oCommand            - [in/out] an object representing an ADO Command.
 ;                  $sName               - a string value.
 ;                  $iSize               - an integer value.
 ;                  $vValue              - a variant value.
@@ -1156,14 +1156,14 @@ EndFunc   ;==>_ADO_Command_CreateParameter
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _ADO_Command_Execute
 ; Description ...: Executes the query, SQL statement, or stored procedure specified in the CommandText or CommandStream property of the Command object.
-; Syntax ........: _ADO_Command_Execute(Byref $oCommand, Byref $sQuery)
-; Parameters ....: $oCommand            - [in/out] an object representing ADO Command.
+; Syntax ........: _ADO_Command_Execute(ByRef $oCommand, ByRef $sQuery)
+; Parameters ....: $oCommand            - [in/out] an object representing an ADO Command.
 ;                  $sQuery              - [in/out] a string value.
 ; Return values .: On Success - $oRecordset
 ;                  On Failure - $ADO_RET_FAILURE and set @error to $ADO_ERR_*
 ; Author ........: mLipok
 ; Modified ......:
-; Remarks .......: you can use _ADO_GetLastQuery() to get recently executed Query String
+; Remarks .......: you can use _ADO_GetLastQuery() to get recently executed query string
 ; Related .......:
 ; Link ..........: https://msdn.microsoft.com/en-us/library/ms681559(v=vs.85).aspx
 ; Example .......: No
@@ -1198,16 +1198,16 @@ EndFunc   ;==>_ADO_Command_Execute
 ; #FUNCTION# ===================================================================
 ; Name ..........: _ADO_Connection_Close
 ; Description ...: Closes an open ADODB.Connection
-; Syntax.........:  _ADO_Connection_Close (ByRef $oConnection)
-; Parameters ....: $oConnection         - [in/out] an object representing ADO Connection.
+; Syntax ........: _ADO_Connection_Close(ByRef $oConnection)
+; Parameters ....: $oConnection         - [in/out] an object representing an ADO Connection.
 ; Return values .: On Success - $ADO_RET_SUCCESS
 ;                  On Failure - $ADO_RET_FAILURE and set @error to $ADO_ERR_*
 ; Author ........: Chris Lambert, mLipok
 ; Modified ......:
 ; Remarks .......:
 ; Related .......:
-; Link ..........;
-; Example .......; no
+; Link ..........:
+; Example .......: No
 ; ==============================================================================
 Func _ADO_Connection_Close(ByRef $oConnection)
 	__ADO_LastCOMErrorDescription_storage('')
@@ -1224,9 +1224,9 @@ EndFunc   ;==>_ADO_Connection_Close
 
 ; #FUNCTION# ===================================================================
 ; Name ..........: _ADO_Connection_CommandTimeout
-; Description ...: Sets and retrieves SQL CommandTimeout
-; Syntax.........:  _ADO_Connection_CommandTimeout(ByRef $oConnection,$iTimeout)
-; Parameters ....: $oConnection         - [in/out] an object representing ADO Connection.
+; Description ...: Sets or retrieves the ADO CommandTimeout value
+; Syntax ........: _ADO_Connection_CommandTimeout(ByRef $oConnection, $iTimeOut = Default)
+; Parameters ....: $oConnection         - [in/out] an object representing an ADO Connection.
 ;                  $iTimeout   			- The timeout period to set if left blank the current value will be retrieved
 ; Return values .: On Success - SQL Command timeout period
 ;                  On Failure - $ADO_RET_FAILURE and set @error to $ADO_ERR_*
@@ -1234,8 +1234,8 @@ EndFunc   ;==>_ADO_Connection_Close
 ; Modified ......:
 ; Remarks .......:
 ; Related .......:
-; Link ..........; https://msdn.microsoft.com/en-us/library/ms678265(v=vs.85).aspx
-; Example .......; no
+; Link ..........: https://msdn.microsoft.com/en-us/library/ms678265(v=vs.85).aspx
+; Example .......: No
 ; ==============================================================================
 Func _ADO_Connection_CommandTimeout(ByRef $oConnection, $iTimeOut = Default)
 	Local Const $oADO_COMErrorHandler = ObjEvent("AutoIt.Error", __ADO_ComErrorHandler_WrapperFunction)
@@ -1257,17 +1257,17 @@ EndFunc   ;==>_ADO_Connection_CommandTimeout
 
 ; #FUNCTION# ===================================================================
 ; Name ..........: _ADO_Connection_Create
-; Description ...: Creates ADODB.Connection object
-; Syntax.........:  _ADO_Connection_Create()
+; Description ...: Creates an ADODB.Connection object
+; Syntax ........: _ADO_Connection_Create()
 ; Parameters ....: None
 ; Return values .: On Success - $oConnection Object
 ;                  On Failure - $ADO_RET_FAILURE and set @error to $ADO_ERR_*
 ; Author ........: Chris Lambert, mLipok
 ; Modified ......:
-; Remarks .......: This function automaticaly add event handling for created connection object assinged to __ADO_EVENT__*** functions, you can use your own event handler by adding them to internal event handler with _ADO_EVENT_Wrapper()
+; Remarks .......: This function automatically add event handling for created connection object assigned to __ADO_EVENT__*** functions, you can use your own event handler by adding them to internal event handler with _ADO_EVENT_Wrapper()
 ; Related .......: _ADO_EVENT_Wrapper
-; Link ..........;
-; Example .......; no
+; Link ..........:
+; Example .......: No
 ; ==============================================================================
 Func _ADO_Connection_Create()
 	__ADO_LastCOMErrorDescription_storage('')
@@ -1282,8 +1282,8 @@ EndFunc   ;==>_ADO_Connection_Create
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _ADO_Connection_OpenConString
 ; Description ...: Open Connection based on Connection String passed to the function
-; Syntax ........: _ADO_Connection_OpenConString(Byref $oConnection, $sConnectionString)
-; Parameters ....: $oConnection         - [in/out] an object representing ADO Connection.
+; Syntax ........: _ADO_Connection_OpenConString(ByRef $oConnection, $sConnectionString)
+; Parameters ....: $oConnection         - [in/out] an object representing an ADO Connection.
 ;                  $sConnectionString   - a string value.
 ; Return values .: On Success - $ADO_RET_SUCCESS
 ;                  On Failure - $ADO_RET_FAILURE and set @error to $ADO_ERR_*
@@ -1311,10 +1311,10 @@ EndFunc   ;==>_ADO_Connection_OpenConString
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _ADO_Connection_OpenMSSQL
-; Description ...: Starts a Database Connection to Microsoft SQL Server
-; Syntax ........: _ADO_Connection_OpenMSSQL(Byref $oConnection, $sServer, $sDBName[, $sUserName = Default[, $sPassword = Default[,
+; Description ...: Opens a database connection to Microsoft SQL Server
+; Syntax ........: _ADO_Connection_OpenMSSQL(ByRef $oConnection, $sServer, $sDBName[, $sUserName = Default[, $sPassword = Default[,
 ;                  $sAppName = Default[, $sWSID = Default[, $bUseProviderInsteadDriver = True]]]]])
-; Parameters ....: $oConnection         - [in/out] an object representing ADO Connection.
+; Parameters ....: $oConnection         - [in/out] an object representing an ADO Connection.
 ;                  $sServer             - a string value. The server to connect to.
 ;                  $sDBName             - a string value. The database name to open.
 ;                  $sUserName           - [optional] a string value. Username for database access. Default is Default.
@@ -1328,7 +1328,7 @@ EndFunc   ;==>_ADO_Connection_OpenConString
 ; Modified ......:
 ; Remarks .......: if $sUserName and $sPassword are Default then MS SQL Windows Authentication will be used
 ; Related .......:
-; Link ..........: https://msdn.microsoft.com/pl-pl/library/ms130822(v=sql.110).aspx
+; Link ..........: https://msdn.microsoft.com/en-us/library/ms130822(v=sql.110).aspx
 ; Example .......: No
 ; ===============================================================================================================================
 Func _ADO_Connection_OpenMSSQL(ByRef $oConnection, $sServer, $sDBName, $sUserName = Default, $sPassword = Default, $sAppName = Default, $sWSID = Default, $bUseProviderInsteadDriver = True)
@@ -1356,10 +1356,10 @@ EndFunc   ;==>_ADO_Connection_OpenMSSQL
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _ADO_Connection_OpenMSSQL_WinAuth
-; Description ...: Starts a Database Connection to Microsoft SQL Server using Windows Authorization
-; Syntax ........: _ADO_Connection_OpenMSSQL_WinAuth(Byref $oConnection, $sServer, $sDBName[, $sAppName = Default[, $sWSID = Default[,
+; Description ...: Opens a database connection to Microsoft SQL Server using Windows Authorization
+; Syntax ........: _ADO_Connection_OpenMSSQL_WinAuth(ByRef $oConnection, $sServer, $sDBName[, $sAppName = Default[, $sWSID = Default[,
 ;                  $bUseProviderInsteadDriver = True]]])
-; Parameters ....: $oConnection         - [in/out] an object representing ADO Connection.
+; Parameters ....: $oConnection         - [in/out] an object representing an ADO Connection.
 ;                  $sServer             - a string value. The server to connect to.
 ;                  $sDBName             - a string value. The database name to open.
 ;                  $sAppName            - [optional] a string value. Default is Default.  AppName for SQL Connection list.
@@ -1371,7 +1371,7 @@ EndFunc   ;==>_ADO_Connection_OpenMSSQL
 ; Modified ......:
 ; Remarks .......:
 ; Related .......:
-; Link ..........: https://msdn.microsoft.com/pl-pl/library/ms130822(v=sql.110).aspx
+; Link ..........: https://msdn.microsoft.com/en-us/library/ms130822(v=sql.110).aspx
 ; Example .......: No
 ; ===============================================================================================================================
 Func _ADO_Connection_OpenMSSQL_WinAuth(ByRef $oConnection, $sServer, $sDBName, $sAppName = Default, $sWSID = Default, $bUseProviderInsteadDriver = True)
@@ -1395,8 +1395,8 @@ EndFunc   ;==>_ADO_Connection_OpenMSSQL_WinAuth
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _ADO_Connection_PropertiesToArray
 ; Description ...: List all Connection Properties
-; Syntax ........: _ADO_Connection_PropertiesToArray(Byref $oConnection)
-; Parameters ....: $oConnection         - [in/out] an object representing ADO Connection.
+; Syntax ........: _ADO_Connection_PropertiesToArray(ByRef $oConnection)
+; Parameters ....: $oConnection         - [in/out] an object representing an ADO Connection.
 ; Return values .: On Success - $aProperties
 ;                  On Failure - $ADO_RET_FAILURE and set @error to $ADO_ERR_*
 ; Author ........: water
@@ -1436,9 +1436,9 @@ EndFunc   ;==>_ADO_Connection_PropertiesToArray
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _ADO_Connection_Timeout
-; Description ...: Sets and retrieves SQL ConnectionTimeout
-; Syntax ........: _ADO_Connection_Timeout(Byref $oConnection[, $iTimeOut = Default])
-; Parameters ....: $oConnection         - [in/out] an object representing ADO Connection.
+; Description ...: Sets or retrieves the ADO ConnectionTimeout value
+; Syntax ........: _ADO_Connection_Timeout(ByRef $oConnection[, $iTimeOut = Default])
+; Parameters ....: $oConnection         - [in/out] an object representing an ADO Connection.
 ;                  $iTimeOut            - [optional] an integer value. Default is Default. The timeout period to set if left blank the current value will be retrieved
 ; Return values .: On Success - Connection timeout period
 ;                  On Failure - $ADO_RET_FAILURE and set @error to $ADO_ERR_*
@@ -1471,10 +1471,10 @@ EndFunc   ;==>_ADO_Connection_Timeout
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _ADO_Execute
-; Description ...: Executes an SQL Query
-; Syntax ........: _ADO_Execute(Byref $oConnection, Byref $sQuery[, $bReturnAsArray = False[, $bFieldNamesInFirstRow = False[,
+; Description ...: Executes an SQL query
+; Syntax ........: _ADO_Execute(ByRef $oConnection, ByRef $sQuery[, $bReturnAsArray = False[, $bFieldNamesInFirstRow = False[,
 ;                  $iCommandType = $ADO_adCmdText[, $iExcecuteOptions = $ADO_adOptionUnspecified]]]])
-; Parameters ....: $oConnection         - [in/out] an object representing ADO Connection.
+; Parameters ....: $oConnection         - [in/out] an object representing an ADO Connection.
 ;                  $sQuery              - [in/out] a string value.
 ;                  $bReturnAsArray      - [optional] a boolean value. Default is False.
 ;                  $bFieldNamesInFirstRow- [optional] a boolean value. Default is False.
@@ -1484,10 +1484,10 @@ EndFunc   ;==>_ADO_Connection_Timeout
 ;                  On Failure - $ADO_RET_FAILURE and set @error to $ADO_ERR_*
 ; Author ........: Chris Lambert, mLipok
 ; Modified ......:
-; Remarks .......: you can use _ADO_GetLastQuery() to get recently executed Query String
+; Remarks .......: you can use _ADO_GetLastQuery() to get recently executed query string
 ; Related .......:
-; Link ..........; https://docs.microsoft.com/en-us/sql/ado/reference/ado-api/execute-method-ado-connection?view=sql-server-ver15
-; Example .......; no
+; Link ..........: https://docs.microsoft.com/en-us/sql/ado/reference/ado-api/execute-method-ado-connection?view=sql-server-ver15
+; Example .......: No
 ; ===============================================================================================================================
 Func _ADO_Execute(ByRef $oConnection, ByRef $sQuery, $bReturnAsArray = False, $bFieldNamesInFirstRow = False, $iCommandType = $ADO_adCmdText, $iExcecuteOptions = $ADO_adOptionUnspecified)
 	__ADO_LastCOMErrorDescription_storage('')
@@ -1732,7 +1732,7 @@ EndFunc   ;==>_ADO_MSSQL_GetProviderVersion
 ; #FUNCTION# ===================================================================
 ; Name ..........: _ADO_Recordset_Create
 ; Description ...: Creates ADODB.Recordset object
-; Syntax.........:  _ADO_Recordset_Create()
+; Syntax ........: _ADO_Recordset_Create()
 ; Parameters ....: None
 ; Return values .: On Success - $oRecordset Object
 ;                  On Failure - $ADO_RET_FAILURE and set @error to $ADO_ERR_*
@@ -1740,8 +1740,8 @@ EndFunc   ;==>_ADO_MSSQL_GetProviderVersion
 ; Modified ......:
 ; Remarks .......:
 ; Related .......:
-; Link ..........; https://docs.microsoft.com/en-us/sql/ado/reference/ado-api/recordset-object-ado?view=sql-server-ver15
-; Example .......; no
+; Link ..........: https://docs.microsoft.com/en-us/sql/ado/reference/ado-api/recordset-object-ado?view=sql-server-ver15
+; Example .......: No
 ; ==============================================================================
 Func _ADO_Recordset_Create()
 	Local Const $oADO_COMErrorHandler = ObjEvent("AutoIt.Error", __ADO_ComErrorHandler_WrapperFunction)
@@ -1779,7 +1779,7 @@ EndFunc   ;==>_ADO_Recordset_Load
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _ADO_Recordset_Save
 ; Description ...: Saves the Recordset in a file or Stream object
-; Syntax ........: _ADO_Recordset_Save(Byref $oRecordset, $sFileFullPath[, $iSaveOptions = $ADO_adPersistXML])
+; Syntax ........: _ADO_Recordset_Save(ByRef $oRecordset, $sFileFullPath[, $iSaveOptions = $ADO_adPersistXML])
 ; Parameters ....: $oRecordset          - [in/out] an object.
 ;                  $sFileFullPath       - path to a file that RecordSet should be saved to.
 ;                  $iSaveOptions        - [optional] an integer value. Default is $ADO_adPersistXML. See ADO_Constants.au3 PersistFormatEnum
@@ -1804,7 +1804,7 @@ EndFunc   ;==>_ADO_Recordset_Save
 ; Name ..........: _ADO_Version
 ; Description ...: Get ADO version
 ; Syntax ........: _ADO_Version([ByRef $oConnection])
-; Parameters ....: $oConnection         - [in/out] an object representing ADO Connection.
+; Parameters ....: $oConnection         - [in/out] an object representing an ADO Connection.
 ; Return values .: On Success - $oConnection.Version
 ;                  On Failure - $ADO_RET_FAILURE and set @error to $ADO_ERR_*
 ; Author ........: Chris Lambert, mLipok
@@ -1830,7 +1830,7 @@ EndFunc   ;==>_ADO_Version
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __ADO_ComErrorHandler_WrapperFunction
 ; Description ...: calls USER ComErrorHandler defined by _ADO_COMErrorHandler_UserFunction() if not defined call _ADO_COMErrorHandler_Function()
-; Syntax ........: __ADO_ComErrorHandler_WrapperFunction(Byref $oADO_Error)
+; Syntax ........: __ADO_ComErrorHandler_WrapperFunction(ByRef $oADO_Error)
 ; Parameters ....: $oADO_Error           - [in/out] an object.
 ; Return values .: None
 ; Author ........: mLipok
@@ -1865,7 +1865,7 @@ EndFunc   ;==>__ADO_ComErrorHandler_WrapperFunction
 ; #FUNCTION# ===================================================================
 ; Name ..........: _ADO_COMErrorHandler_Function
 ; Description ...: AutoIt COM Error handler function
-; Syntax ........: _ADO_COMErrorHandler_Function(Byref $oADO_Error)
+; Syntax ........: _ADO_COMErrorHandler_Function(ByRef $oADO_Error)
 ; Parameters ....: $oADO_Error          - [in/out] an object.
 ; Return values .: None
 ; Author ........: mLipok
@@ -1873,7 +1873,7 @@ EndFunc   ;==>__ADO_ComErrorHandler_WrapperFunction
 ; Remarks .......: This COMErrorHandler function will show the ouptut only when not @Compiled
 ; Related .......: _ADO_COMErrorHandler_UserFunction, __ADO_ComErrorHandler_WrapperFunction
 ; Link ..........:
-; Example .......: no
+; Example .......: No
 ; ================================================================================
 Func _ADO_COMErrorHandler_Function(ByRef $oADO_Error)
 	If @Compiled Then _
@@ -1957,12 +1957,12 @@ EndFunc   ;==>_ADO_COMErrorHandler_UserFunction
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __ADO_EVENT__BeginTransComplete
 ; Description ...: BeginTransComplete is called after the BeginTrans operation
-; Syntax ........: __ADO_EVENT__BeginTransComplete($iTransactionLevel, Byref $oError, $i_adStatus, Byref $oConnection)
+; Syntax ........: __ADO_EVENT__BeginTransComplete($iTransactionLevel, ByRef $oError, $i_adStatus, ByRef $oConnection)
 ; Parameters ....: $iTransactionLevel   - an integer value. A Long value that contains the new transaction level of the BeginTrans that caused this event.
 ;                  $oError              - [in/out] an object. An Error object. It describes the error that occurred if the value of EventStatusEnum is adStatusErrorsOccurred; otherwise it is not set.
 ;                  $i_adStatus          - an integer value. An EventStatusEnum status value. When any of these events is called, this parameter is set to adStatusOK if the operation that caused the event was successful, or to adStatusErrorsOccurred if the operation failed.
 ;											These events can prevent subsequent notifications by setting this parameter to adStatusUnwantedEvent before the event returns.
-;                  $oConnection         - [in/out] an object representing ADO Connection. The Connection object for which this event occurred.
+;                  $oConnection         - [in/out] an object representing an ADO Connection. The Connection object for which this event occurred.
 ; Return values .: None
 ; Author ........: mLipok
 ; Modified ......:
@@ -1990,10 +1990,10 @@ EndFunc   ;==>__ADO_EVENT__BeginTransComplete
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __ADO_EVENT__CommitTransComplete
 ; Description ...: CommitTransComplete is called after the CommitTrans operation.
-; Syntax ........: __ADO_EVENT__CommitTransComplete(Byref $oError, $i_adStatus, Byref $oConnection)
+; Syntax ........: __ADO_EVENT__CommitTransComplete(ByRef $oError, $i_adStatus, ByRef $oConnection)
 ; Parameters ....: $oError              - [in/out] an object.
 ;                  $i_adStatus          - an integer value.
-;                  $oConnection         - [in/out] an object representing ADO Connection.
+;                  $oConnection         - [in/out] an object representing an ADO Connection.
 ; Return values .: None
 ; Author ........: mLipok
 ; Modified ......:
@@ -2025,10 +2025,10 @@ EndFunc   ;==>__ADO_EVENT__CommitTransComplete
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __ADO_EVENT__ConnectComplete
 ; Description ...: ConnectComplete Events (ADO)
-; Syntax ........: __ADO_EVENT__ConnectComplete(Byref $oError, $i_adStatus, Byref $oConnection)
+; Syntax ........: __ADO_EVENT__ConnectComplete(ByRef $oError, $i_adStatus, ByRef $oConnection)
 ; Parameters ....: $oError              - [in/out] an object.
 ;                  $i_adStatus          - an integer value.
-;                  $oConnection         - [in/out] an object representing ADO Connection.
+;                  $oConnection         - [in/out] an object representing an ADO Connection.
 ; Return values .: None
 ; Author ........: mLipok
 ; Modified ......:
@@ -2056,9 +2056,9 @@ EndFunc   ;==>__ADO_EVENT__ConnectComplete
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __ADO_EVENT__Disconnect
 ; Description ...: Disconnect Events (ADO)
-; Syntax ........: __ADO_EVENT__Disconnect($i_adStatus, Byref $oConnection)
+; Syntax ........: __ADO_EVENT__Disconnect($i_adStatus, ByRef $oConnection)
 ; Parameters ....: $i_adStatus          - an integer value.
-;                  $oConnection         - [in/out] an object representing ADO Connection.
+;                  $oConnection         - [in/out] an object representing an ADO Connection.
 ; Return values .: None
 ; Author ........: mLipok
 ; Modified ......:
@@ -2081,6 +2081,24 @@ Func __ADO_EVENT__Disconnect($i_adStatus, ByRef $oConnection)
 ;~ 	$oConnection.errors.clear
 EndFunc   ;==>__ADO_EVENT__Disconnect
 
+; #INTERNAL_USE_ONLY# ==========================================================================================================
+; Name ..........: __ADO_EVENT__ExecuteComplete
+; Description ...: Handles the ADO ExecuteComplete event and forwards it to the user event wrapper.
+; Syntax ........: __ADO_EVENT__ExecuteComplete($iRecordsAffected, ByRef $oError, $i_adStatus, ByRef $oCommand, ByRef $oRecordset, ByRef $oConnection)
+; Parameters ....: $iRecordsAffected   - number of records affected by the executed command.
+;                  $oError            - [in/out] ADO Error object supplied by the event.
+;                  $i_adStatus        - ADO event status value.
+;                  $oCommand          - [in/out] ADO Command object supplied by the event.
+;                  $oRecordset        - [in/out] ADO Recordset object supplied by the event.
+;                  $oConnection       - [in/out] ADO Connection object supplied by the event.
+; Return values .: None
+; Author ........: mLipok
+; Modified ......:
+; Remarks .......: Header generated by #AI - Handles the ExecuteComplete ADO event callback.
+; Related .......: __ADO_EVENT_InternalWrapperForUserFunction, __ADO_RowAffected
+; Link ..........: https://msdn.microsoft.com/en-us/library/windows/desktop/ms681546(v=vs.85).aspx
+; Example .......: No
+; ==============================================================================================================================
 Func __ADO_EVENT__ExecuteComplete($iRecordsAffected, ByRef $oError, $i_adStatus, ByRef $oCommand, ByRef $oRecordset, ByRef $oConnection)
 	__ADO_RowAffected($iRecordsAffected)
 
@@ -2105,10 +2123,10 @@ EndFunc   ;==>__ADO_EVENT__ExecuteComplete
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __ADO_EVENT__FetchComplete
 ; Description ...: FetchComplete Event (ADO)
-; Syntax ........: __ADO_EVENT__FetchComplete(Byref $oError, $i_adStatus, Byref $oRecordset)
+; Syntax ........: __ADO_EVENT__FetchComplete(ByRef $oError, $i_adStatus, ByRef $oRecordset)
 ; Parameters ....: $oError              - [in/out] an object.
 ;                  $i_adStatus          - an integer value.
-;                  $oRecordset          - [in/out] an object representing ADO Recordset.
+;                  $oRecordset          - [in/out] an object representing an ADO Recordset.
 ; Return values .: None
 ; Author ........: mLipok
 ; Modified ......:
@@ -2133,11 +2151,11 @@ EndFunc   ;==>__ADO_EVENT__FetchComplete
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __ADO_EVENT__FetchProgress
 ; Description ...: FetchProgress Event (ADO)
-; Syntax ........: __ADO_EVENT__FetchProgress($iProgress, $iMaxProgress, $i_adStatus, Byref $oRecordset)
+; Syntax ........: __ADO_EVENT__FetchProgress($iProgress, $iMaxProgress, $i_adStatus, ByRef $oRecordset)
 ; Parameters ....: $iProgress           - an integer value.
 ;                  $iMaxProgress        - an integer value.
 ;                  $i_adStatus          - an integer value.
-;                  $oRecordset          - [in/out] an object representing ADO Recordset.
+;                  $oRecordset          - [in/out] an object representing an ADO Recordset.
 ; Return values .: None
 ; Author ........: mLipok
 ; Modified ......:
@@ -2164,10 +2182,10 @@ EndFunc   ;==>__ADO_EVENT__FetchProgress
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __ADO_EVENT__InfoMessage
 ; Description ...:
-; Syntax ........: __ADO_EVENT__InfoMessage(Byref $oError, $i_adStatus, Byref $oConnection)
+; Syntax ........: __ADO_EVENT__InfoMessage(ByRef $oError, $i_adStatus, ByRef $oConnection)
 ; Parameters ....: $oError              - [in/out] an object.
 ;                  $i_adStatus          - an integer value.
-;                  $oConnection         - [in/out] an object representing ADO Connection.
+;                  $oConnection         - [in/out] an object representing an ADO Connection.
 ; Return values .: None
 ; Author ........: mLipok
 ; Modified ......:
@@ -2187,10 +2205,10 @@ EndFunc   ;==>__ADO_EVENT__InfoMessage
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __ADO_EVENT__RollbackTransComplete
 ; Description ...: RollbackTransComplete is called after the RollbackTrans operation.
-; Syntax ........: __ADO_EVENT__RollbackTransComplete(Byref $oError, $i_adStatus, Byref $oConnection)
+; Syntax ........: __ADO_EVENT__RollbackTransComplete(ByRef $oError, $i_adStatus, ByRef $oConnection)
 ; Parameters ....: $oError              - [in/out] an object.
 ;                  $i_adStatus          - an integer value.
-;                  $oConnection         - [in/out] an object representing ADO Connection.
+;                  $oConnection         - [in/out] an object representing an ADO Connection.
 ; Return values .: None
 ; Author ........: mLipok
 ; Modified ......:
@@ -2218,13 +2236,13 @@ EndFunc   ;==>__ADO_EVENT__RollbackTransComplete
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __ADO_EVENT__WillConnect
 ; Description ...: WillConnect Event (ADO)
-; Syntax ........: __ADO_EVENT__WillConnect($sConnection_String, $sUserID, $sPassword, $iOptions, $i_adStatus, Byref $oConnection)
+; Syntax ........: __ADO_EVENT__WillConnect($sConnection_String, $sUserID, $sPassword, $iOptions, $i_adStatus, ByRef $oConnection)
 ; Parameters ....: $sConnection_String   - a string value.
 ;                  $sUserID             - a string value.
 ;                  $sPassword           - a string value.
 ;                  $iOptions            - an integer value.
 ;                  $i_adStatus          - an integer value.
-;                  $oConnection         - [in/out] an object representing ADO Connection.
+;                  $oConnection         - [in/out] an object representing an ADO Connection.
 ; Return values .: None
 ; Author ........: mLipok
 ; Modified ......:
@@ -2258,16 +2276,16 @@ EndFunc   ;==>__ADO_EVENT__WillConnect
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __ADO_EVENT__WillExecute
 ; Description ...: WillExecute Event (ADO)
-; Syntax ........: __ADO_EVENT__WillExecute($sSource, $iCursorType, $iLockType, $iOptions, $i_adStatus, Byref $oCommand,
-;                  Byref $oRecordset, Byref $oConnection)
+; Syntax ........: __ADO_EVENT__WillExecute($sSource, $iCursorType, $iLockType, $iOptions, $i_adStatus, ByRef $oCommand,
+;                  ByRef $oRecordset, ByRef $oConnection)
 ; Parameters ....: $sSource             - a string value.
 ;                  $iCursorType         - an integer value.
 ;                  $iLockType           - an integer value.
 ;                  $iOptions            - an integer value.
 ;                  $i_adStatus          - an integer value.
-;                  $oCommand            - [in/out] an object representing ADO Command.
-;                  $oRecordset          - [in/out] an object representing ADO Recordset.
-;                  $oConnection         - [in/out] an object representing ADO Connection.
+;                  $oCommand            - [in/out] an object representing an ADO Command.
+;                  $oRecordset          - [in/out] an object representing an ADO Recordset.
+;                  $oConnection         - [in/out] an object representing an ADO Connection.
 ; Return values .: None
 ; Author ........: mLipok
 ; Modified ......:
@@ -2299,8 +2317,8 @@ EndFunc   ;==>__ADO_EVENT__WillExecute
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: __ADO_EVENT_InternalWrapperForUserFunction
 ; Description ...: An internall function that handles user defined function to handle ADO Events
-; Syntax ........: __ADO_EVENT_InternalWrapperForUserFunction($param0, Byref $oConnection_param1, Byref $oCommand_param2, Byref $oRecordset_param3,
-;                  Byref $oError_param4[, $param5_adStatus = Null[, $param6 = Null[, $param7 = Null[, $param8 = Null[,
+; Syntax ........: __ADO_EVENT_InternalWrapperForUserFunction($param0, ByRef $oConnection_param1, ByRef $oCommand_param2, ByRef $oRecordset_param3,
+;                  ByRef $oError_param4[, $param5_adStatus = Null[, $param6 = Null[, $param7 = Null[, $param8 = Null[,
 ;                  $param9 = Null]]]]])
 ; Parameters ....: $param0              - EventName (ADO) or FunctionName (users AutoIt defined function).
 ;                  $oConnection_param1  - [in/out] Connection object if passed by a ADO Event.
@@ -2335,16 +2353,18 @@ EndFunc   ;==>__ADO_EVENT_InternalWrapperForUserFunction
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __ADO_EVENTS_ErrorCollectionAnalyzer
-; Description ...: Function to analyze ErrorCollection
-; Syntax ........: __ADO_EVENTS_ErrorCollectionAnalyzer(Byref $oConnection[, $bFull = False])
-; Parameters ....: $oConnection         - [in/out] an object.
-;                  $bFull               - [optional] a boolean value. Default is False.
+; Description ...: Analyzes the ADO Connection.Errors collection and writes detailed diagnostic information to console output.
+; Syntax ........: __ADO_EVENTS_ErrorCollectionAnalyzer(ByRef $oConnection[, $iError = @error[, $iExtended = @extended]])
+; Parameters ....: $oConnection         - [in/out] ADO Connection object whose Errors collection should be analyzed.
+;                  $iError              - [optional] Error value to preserve and restore in @error. Default is @error.
+;                  $iExtended           - [optional] Extended value to preserve and restore in @extended. Default is @extended.
 ; Return values .: None
 ; Author ........: mLipok
 ; Modified ......:
-; Remarks .......: @WIP
-; Related .......:
-; Link ..........:
+; Remarks .......: Internal diagnostic helper used after ADO/COM operations to inspect provider-specific errors.
+;                  The function preserves the caller error state by returning SetError($iError, $iExtended).
+; Related .......: __ADO_ConsoleWrite_Blue, __ADO_ComErrorHandler_WrapperFunction
+; Link ..........: https://learn.microsoft.com/sql/ado/reference/ado-api/errors-collection-ado
 ; Example .......: No
 ; ===============================================================================================================================
 Func __ADO_EVENTS_ErrorCollectionAnalyzer(ByRef $oConnection, $iError = @error, $iExtended = @extended)
@@ -2612,6 +2632,19 @@ Func _ADO_ConsoleOutput($vData, $iError = @error, $iExtended = @extended)
 	Return SetError($iError, $iExtended, $ADO_RET_SUCCESS)
 EndFunc   ;==>_ADO_ConsoleOutput
 
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _ADO_ExcelCellParser
+; Description ...: Truncates Excel cell data to the maximum text length used by this UDF helper.
+; Syntax ........: _ADO_ExcelCellParser($sCellData)
+; Parameters ....: $sCellData          - a string containing the source Excel cell data.
+; Return values .: A string truncated to 255 characters.
+; Author ........: mLipok
+; Modified ......:
+; Remarks .......: Header generated by #AI - Excel cells are limited to 255 characters in this helper.
+; Related .......: _ADO_ConnectionString_Excel
+; Link ..........: https://support.microsoft.com/en-gb/office/excel-specifications-and-limits-1672b34d-7043-467e-8e27-269d656771c3
+; Example .......: No
+; ==============================================================================================================================
 Func _ADO_ExcelCellParser($sCellData)
 ;~ 	https://support.microsoft.com/en-gb/office/excel-specifications-and-limits-1672b34d-7043-467e-8e27-269d656771c3
 	$sCellData = StringLeft($sCellData, 255)
@@ -2620,7 +2653,7 @@ EndFunc   ;==>_ADO_ExcelCellParser
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _ADO_GetErrorDescription
-; Description ...: Get description for @ADO_ERR_*
+; Description ...: Gets a description for $ADO_ERR_* / @error values
 ; Syntax ........: _ADO_GetErrorDescription([$sUserUniqueDescription = ''[, $bShowHumanReadableDescription = True[, $iError = @error[,
 ;                  $iExtended = @extended]]]])
 ; Parameters ....: $sUserUniqueDescription        - [optional] a string value. Default is ''.
@@ -2652,7 +2685,7 @@ Func _ADO_GetErrorDescription($sUserUniqueDescription = '', $bShowHumanReadableD
 				Case $ADO_ERR_COMHANDLER
 					$sInfo &= 'COM Error Handler Registration'
 				Case $ADO_ERR_CONNECTION
-					$sInfo &= '$oConection.Open - Opening error'
+					$sInfo &= '$oConnection.Open - Opening error'
 				Case $ADO_ERR_ISNOTOBJECT
 					$sInfo &= 'Function Parameters error - Expected/Required Object'
 				Case $ADO_ERR_ISCLOSEDOBJECT
@@ -2668,7 +2701,7 @@ Func _ADO_GetErrorDescription($sUserUniqueDescription = '', $bShowHumanReadableD
 				Case $ADO_ERR_INVALIDARRAY
 					$sInfo &= 'Function Parameters error - Invalid Recordset Array'
 				Case $ADO_ERR_RECORDSETEMPTY
-					$sInfo &= 'The Recordset is Empty - this not always mean error but in this case will not be returned any data'
+					$sInfo &= 'The Recordset is Empty - this does not always mean error but in this case will not be returned any data'
 				Case $ADO_ERR_NOCURRENTRECORD
 					$sInfo &= 'The Recordset has no current record - but in this case will not be returned any data'
 				Case $ADO_ERR_ENUMCOUNTER
@@ -2694,7 +2727,7 @@ Func _ADO_GetErrorDescription($sUserUniqueDescription = '', $bShowHumanReadableD
 				Case $ADO_EXT_PARAM6
 					$sInfo &= 'Error Occurs in 6-Parameter'
 				Case $ADO_EXT_INTERNALFUNCTION
-					$sInfo &= 'Error Related to internal Function - should not happend - UDF Developer make something wrong ???'
+					$sInfo &= 'Error Related to internal Function - should not happen - UDF Developer make something wrong ???'
 				Case $ADO_EXT_ENUMCOUNTER
 					$sInfo &= 'not used in UDF - just for other/future testing'
 				Case Else
@@ -2840,6 +2873,131 @@ Func _ADO_MSDNErrorValueEnum_Description($iError, $iErrorMacro = @error, $iExten
 EndFunc   ;==>_ADO_MSDNErrorValueEnum_Description
 
 ; #FUNCTION# ====================================================================================================================
+; Name ..........: _ADO_ERROR_GetErrorInfo
+; Description ...:
+; Syntax ........: _ADO_ERROR_GetErrorInfo($iError)
+; Parameters ....: $iError              - an integer value.
+; Return values .: $sDescription
+; Author ........: mLipok
+; Modified ......:
+; Remarks .......: Header generated by #AI - Moved from ADO_CONSTANTS.au3.
+; Related .......:
+; Link ..........: https://msdn.microsoft.com/en-us/library/windows/desktop/ms681549(v=vs.85).aspx
+; Link ..........: http://www.rosam.se/doc/atsdoc/Server%20-%20Messages%20and%20Codes/ADC5906BBD514757BAEE546DC6F7A4FA/0.htm
+; Link ..........: https://support.ca.com/cadocs/0/CA%20IDMS%20%20Server%20Option%2017-ENU/Bookshelf_Files/Javadoc/ca/idms/qcli/SQLState.html
+; Link ..........: http://www.postgresql.org/docs/8.2/static/errcodes-appendix.html
+; Example .......: No
+; ===============================================================================================================================
+Func _ADO_ERROR_GetErrorInfo($iError)
+	Local $sDescription = ''
+	Switch $iError
+		Case $ADO_adErrProviderFailed
+			$sDescription = "Provider failed to perform the requested operation."
+		Case $ADO_adErrInvalidArgument
+			$sDescription = "Arguments are of the wrong type, are out of acceptable range, or are in conflict with one another. This error is often caused by a typographical error in an SQL SELECT statement. For example, a misspelled field name or table name can generate this error. This error can also occur when a field or table named in a SELECT statement does not exist in the data store."
+		Case $ADO_adErrOpeningFile
+			$sDescription = "File could not be opened. A misspelled file name was specified, or a file has been moved, renamed, or deleted. Over a network, the drive might be temporarily unavailable or network traffic might be preventing a connection."
+		Case $ADO_adErrReadFile
+			$sDescription = "File could not be read. The name of the file is specified incorrectly, the file might have been moved or deleted, or the file might have become corrupted."
+		Case $ADO_adErrWriteFile
+			$sDescription = "Write to file failed. You might have closed a file and then tried to write to it, or the file might be corrupted. If the file is located on a network drive, transient network conditions might prevent writing to a network drive."
+		Case $ADO_adErrNoCurrentRecord
+			$sDescription = "Either BOF or EOF is True, or the current record has been deleted. Requested operation requires a current record. 3219	adErrIllegalOperation	Operation is not allowed in this context."
+		Case $ADO_adErrCantChangeProvider
+			$sDescription = "Supplied provider is different from the one already in use."
+		Case $ADO_adErrInTransaction
+			$sDescription = "Connection object cannot be explicitly closed while in a transaction. A Recordset or Connection object that is currently participating in a transaction cannot be closed. Call either RollbackTrans or CommitTrans before closing the object."
+		Case $ADO_adErrFeatureNotAvailable
+			$sDescription = "The object or provider is not capable of performing the requested operation. Some operations depend on a particular provider version."
+		Case $ADO_adErrItemNotFound
+			$sDescription = "Item cannot be found in the collection corresponding to the requested name or ordinal. An incorrect field or table name has been specified."
+		Case $ADO_adErrObjectInCollection
+			$sDescription = "Object is already in collection. Cannot append. An object cannot be added to the same collection twice."
+		Case $ADO_adErrObjectNotSet
+			$sDescription = "Object is no longer valid."
+		Case $ADO_adErrDataConversion
+			$sDescription = "Application uses a value of the wrong type for the current operation. You might have supplied a string to an operation that expects a stream, for example."
+		Case $ADO_adErrObjectClosed
+			$sDescription = "Operation is not allowed when the object is closed. TheConnection or Recordset has been closed. For example, some other routine might have closed a global object. You can prevent this error by checking the State property before you attempt an operation."
+		Case $ADO_adErrObjectOpen
+			$sDescription = "Operation is not allowed when the object is open. An object that is open cannot be opened. Fields cannot be appended to an open Recordset."
+		Case $ADO_adErrProviderNotFound
+			$sDescription = "Provider cannot be found. It may not be properly installed. 3707	adErrBoundToCommand	The ActiveConnection property of a Recordset object, which has a Command object as its source, cannot be changed. The application attempted to assign a newConnection object to a Recordset that has a Commandobject as its source."
+		Case $ADO_adErrInvalidParamInfo
+			$sDescription = "Parameter object is improperly defined. Inconsistent or incomplete information was provided."
+		Case $ADO_adErrInvalidConnection
+			$sDescription = "The connection cannot be used to perform this operation. It is either closed or invalid in this context."
+		Case $ADO_adErrNotReentrant
+			$sDescription = "Operation cannot be performed while processing event. An operation cannot be performed within an event handler that causes the event to fire again. For example, navigation methods should not be called from within aWillMove event handler."
+		Case $ADO_adErrStillExecuting
+			$sDescription = "Operation cannot be performed while executing asynchronously."
+		Case $ADO_adErrOperationCancelled
+			$sDescription = "Operation has been canceled by the user. The application has called the CancelUpdate or CancelBatch method and the current operation has been canceled."
+		Case $ADO_adErrStillConnecting
+			$sDescription = "Operation cannot be performed while connecting asynchronously."
+		Case $ADO_adErrInvalidTransaction
+			$sDescription = "Coordinating transaction is invalid or has not started."
+		Case $ADO_adErrNotExecuting
+			$sDescription = "Operation cannot be performed while not executing."
+		Case $ADO_adErrUnsafeOperation
+			$sDescription = "Safety settings on this computer prohibit accessing a data source on another domain."
+		Case $ADO_adWrnSecurityDialog
+			$sDescription = "For internal use only. Don't use. (Entry was included for the sake of completeness. This error should not appear in your code.)"
+		Case $ADO_adWrnSecurityDialogHeader
+			$sDescription = "For internal use only. Don't use. (Entry included for the sake of completeness. This error should not appear in your code.)"
+		Case $ADO_adErrIntegrityViolation
+			$sDescription = "Data value conflicts with the integrity constraints of the field. A new value for a Field would cause a duplicate key. A value that forms one side of a relationship between two records might not be updatable."
+		Case $ADO_adErrPermissionDenied
+			$sDescription = "Insufficient permission prevents writing to the field. The user named in the connection string does not have the proper permissions to write to a Field."
+		Case $ADO_adErrDataOverflow
+			$sDescription = "Data value is too large to be represented by the field data type. A numeric value that is too large for the intended field was assigned. For example, a long integer value was assigned to a short integer field."
+		Case $ADO_adErrSchemaViolation
+			$sDescription = "Data value conflicts with the data type or constraints of the field. The data store has validation constraints that differ from the Field value."
+		Case $ADO_adErrSignMismatch
+			$sDescription = "Conversion failed because the data value was signed and the field data type used by the provider was unsigned."
+		Case $ADO_adErrCantConvertvalue
+			$sDescription = "Data value cannot be converted for reasons other than sign mismatch or data overflow. For example, conversion would have truncated data."
+		Case $ADO_adErrCantCreate
+			$sDescription = "Data value cannot be set or retrieved because the field data type was unknown, or the provider had insufficient resources to perform the operation."
+		Case $ADO_adErrColumnNotOnThisRow
+			$sDescription = "Record does not contain this field. An incorrect field name was specified or a field not in the Fields collection of the current record was referenced."
+		Case $ADO_adErrURLDoesNotExist
+			$sDescription = "Either the source URL or the parent of the destination URL does not exist. There is a typographical error in either the source or destination URL. You might havehttp://mysite/photo/myphoto.jpg when you should actually have http://mysite/photos/myphoto.jpginstead. The typographical error in the parent URL (in this case, photo instead of photos) has caused the error."
+		Case $ADO_adErrTreePermissionDenied
+			$sDescription = "Permissions are insufficient to access tree or subtree. The user named in the connection string does not have the appropriate permissions."
+		Case $ADO_adErrInvalidURL
+			$sDescription = "URL contains invalid characters. Make sure the URL is typed correctly. The URL follows the scheme registered to the current provider (for example, Internet Publishing Provider is registered for http)."
+		Case $ADO_adErrResourceLocked
+			$sDescription = "Object represented by the specified URL is locked by one or more other processes. Wait until the process has finished and attempt the operation again. The object you are trying to access has been locked by another user or by another process in your application. This is most likely to arise in a multi-user environment."
+		Case $ADO_adErrResourceExists
+			$sDescription = "Copy operation cannot be performed. Object named by destination URL already exists. Specify adCopyOverwriteto replace the object. If you do not specifyadCopyOverwrite when copying the files in a directory, the copy fails when you try to copy an item that already exists in the destination location."
+		Case $ADO_adErrCannotComplete
+			$sDescription = "The server cannot complete the operation. This might be because the server is busy with other operations or it might be low on resources."
+		Case $ADO_adErrVolumeNotFound
+			$sDescription = "Provider cannot locate the storage device indicated by the URL. Make sure the URL is typed correctly. The URL of the storage device might be incorrect, but this error can occur for other reasons. The device might be offline or a large volume of network traffic might prevent the connection from being made."
+		Case $ADO_adErrOutOfSpace
+			$sDescription = "Operation cannot be performed. Provider cannot obtain enough storage space. There might not be enough RAM or hard-drive space for temporary files on the server."
+		Case $ADO_adErrResourceOutOfScope
+			$sDescription = "Source or destination URL is outside the scope of the current record."
+		Case $ADO_adErrUnavailable
+			$sDescription = "Operation failed to complete and the status is unavailable. The field may be unavailable or the operation was not attempted. Another user might have changed or deleted the field you are trying to access."
+		Case $ADO_adErrURLNamedRowDoesNotExist
+			$sDescription = "Record named by this URL does not exist. While attempting to open a file using a Record object, either the file name or the path to the file was misspelled."
+		Case $ADO_adErrDelResOutOfScope
+			$sDescription = "The URL of the object to be deleted is outside the scope of the current record."
+		Case $ADO_adErrCatalogNotSet
+			$sDescription = "Operation requires a valid ParentCatalog."
+		Case $ADO_adErrCantChangeConnection
+			$sDescription = "Connection was denied. The new connection you requested has different characteristics than the one already in use."
+		Case $ADO_adErrFieldsUpdateFailed
+			$sDescription = "Fields update failed. For further information, examine theStatus property of individual field objects. This error can occur in two situations: when changing a Field object's value in the process of changing or adding a record to the database; and when changing the properties of the Fieldobject itself. 3750	adErrDenyNotSupported	Provider does not support sharing restrictions. An attempt was made to restrict file sharing and your provider does not support the concept."
+		Case $ADO_adErrDenyTypeNotSupported
+			$sDescription = "Provider does not support the requested kind of sharing restriction. An attempt was made to establish a particular type of file-sharing restriction that is not supported by your provider. See the provider's documentation to determine what file-sharing restrictions are supported."
+	EndSwitch
+	Return $sDescription
+EndFunc   ;==>_ADO_ERROR_GetErrorInfo
+
+; #FUNCTION# ====================================================================================================================
 ; Name ..........: _ADO_UDFVersion
 ; Description ...: Get ADO UDFVersion number
 ; Syntax ........: _ADO_UDFVersion()
@@ -2894,7 +3052,7 @@ EndFunc   ;==>_Au3Date_to_SQLDate
 ;                  On Failure - $ADO_RET_FAILURE and set @error to $ADO_ERR_*
 ; Author ........: mLipok
 ; Modified ......:
-; Remarks .......: @TODO - REFACTORING should automaticaly validate SQL format and know if it is or not $bOnlyYMD
+; Remarks .......: @TODO - REFACTORING should automatically validate SQL format and know if it is or not $bOnlyYMD
 ; Related .......: _Au3Date_to_SQLDate
 ; Link ..........:
 ; Example .......: No
@@ -2910,7 +3068,7 @@ EndFunc   ;==>_SQLDate_to_Au3Date
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _ADO_OpenSchema_Catalogs
 ; Description ...: Returns the physical attributes associated with catalogs accessible from the DBMS. (CATALOGS Rowset)
-; Syntax ........: _ADO_OpenSchema_Catalogs(Byref $oConnection[, $s_CATALOG_NAME = Default])
+; Syntax ........: _ADO_OpenSchema_Catalogs(ByRef $oConnection[, $s_CATALOG_NAME = Default])
 ; Parameters ....: $oConnection         - [in/out] an object.
 ;                  $s_CATALOG_NAME      - [optional] a string value. Default is Default.
 ; Return values .: $oRecordset
@@ -2946,7 +3104,7 @@ EndFunc   ;==>_ADO_OpenSchema_Catalogs
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _ADO_OpenSchema_Columns
 ; Description ...: Returns the columns of tables (including views) defined in the catalog that are accessible to a given user. (COLUMNS Rowset)
-; Syntax ........: _ADO_OpenSchema_Columns(Byref $oConnection[, $s_TABLE_CATALOG = Default[, $s_TABLE_SCHEMA = Default[,
+; Syntax ........: _ADO_OpenSchema_Columns(ByRef $oConnection[, $s_TABLE_CATALOG = Default[, $s_TABLE_SCHEMA = Default[,
 ;                  $s_TABLE_NAME = Default[, $s_COLUMN_NAME = Default]]]])
 ; Parameters ....: $oConnection         - [in/out] an object.
 ;                  $s_TABLE_CATALOG     - [optional] a string value. Default is Default.
@@ -2988,7 +3146,7 @@ EndFunc   ;==>_ADO_OpenSchema_Columns
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _ADO_OpenSchema_Indexes
 ; Description ...: Returns the indexes defined in the catalog that are owned by a given user. (INDEXES Rowset)
-; Syntax ........: _ADO_OpenSchema_Indexes(Byref $oConnection[, $s_TABLE_CATALOG = Default[, $s_TABLE_SCHEMA = Default[,
+; Syntax ........: _ADO_OpenSchema_Indexes(ByRef $oConnection[, $s_TABLE_CATALOG = Default[, $s_TABLE_SCHEMA = Default[,
 ;                  $s_INDEX_NAME = Default[, $s_TYPE = Default[, $s_TABLE_NAME = Default]]]]])
 ; Parameters ....: $oConnection         - [in/out] an object.
 ;                  $s_TABLE_CATALOG     - [optional] a string value. Default is Default.
@@ -3033,7 +3191,7 @@ EndFunc   ;==>_ADO_OpenSchema_Indexes
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _ADO_OpenSchema_Procedures
 ; Description ...: Returns information about the parameters and return codes of procedures
-; Syntax ........: _ADO_OpenSchema_Procedures(Byref $oConnection[, $s_PROCEDURE_CATALOG = Default[, $s_PROCEDURE_SCHEMA = Default[,
+; Syntax ........: _ADO_OpenSchema_Procedures(ByRef $oConnection[, $s_PROCEDURE_CATALOG = Default[, $s_PROCEDURE_SCHEMA = Default[,
 ;                  $s_PROCEDURE_NAME = Default[, $s_PARAMETER_NAME = Default]]]])
 ; Parameters ....: $oConnection         - [in/out] an object.
 ;                  $s_PROCEDURE_CATALOG - [optional] a string value. Default is Default.
@@ -3076,7 +3234,7 @@ EndFunc   ;==>_ADO_OpenSchema_Procedures
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _ADO_OpenSchema_Tables
 ; Description ...: Returns the tables (including views) defined in the catalog that are accessible to a given user. (TABLES Rowset)
-; Syntax ........: _ADO_OpenSchema_Tables(Byref $oConnection[, $s_TABLE_CATALOG = Default[, $s_TABLE_SCHEMA = Default[,
+; Syntax ........: _ADO_OpenSchema_Tables(ByRef $oConnection[, $s_TABLE_CATALOG = Default[, $s_TABLE_SCHEMA = Default[,
 ;                  $s_TABLE_NAME = Default[, $s_TABLE_TYPE = Default]]]])
 ; Parameters ....: $oConnection         - [in/out] an object.
 ;                  $s_TABLE_CATALOG     - [optional] a string value. Default is Default.
@@ -3119,7 +3277,7 @@ EndFunc   ;==>_ADO_OpenSchema_Tables
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _ADO_Schema_GetAllCatalogs
 ; Description ...:
-; Syntax ........: _ADO_Schema_GetAllCatalogs(Byref $oConnection)
+; Syntax ........: _ADO_Schema_GetAllCatalogs(ByRef $oConnection)
 ; Parameters ....: $oConnection         - [in/out] an object.
 ; Return values .: $aSchema_Catalogs
 ; Author ........: mLipok
@@ -3145,7 +3303,7 @@ EndFunc   ;==>_ADO_Schema_GetAllCatalogs
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _ADO_Schema_GetAllTables
 ; Description ...:
-; Syntax ........: _ADO_Schema_GetAllTables(Byref $oConnection, $s_TABLE_CATALOG)
+; Syntax ........: _ADO_Schema_GetAllTables(ByRef $oConnection, $s_TABLE_CATALOG)
 ; Parameters ....: $oConnection         - [in/out] an object.
 ;                  $s_TABLE_CATALOG     - a string value.
 ; Return values .: $aSchema_Tables
@@ -3305,21 +3463,22 @@ EndFunc   ;==>_ADO_ConnectionString_MySQL
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _ADO_ConnectionString_Oracle
-; Description ...: Create Connection string for Oracle file
+; Description ...: Placeholder for creating an Oracle connection string.
 ; Syntax ........: _ADO_ConnectionString_Oracle($sUser, $sPassword, $sDataBase[, $sDriver = Default[, $sServer = Default[,
 ;                  $sPort = Default]]])
-; Parameters ....: $sUser               - a string value.
-;                  $sPassword           - a string value.
-;                  $sDataBase           - a string value.
-;                  $sDriver             - [optional] a string value. Default is Default.
-;                  $sServer             - [optional] a string value. Default is Default.
-;                  $sPort               - [optional] a string value. Default is Default.
+; Parameters ....: $sUser               - Oracle user name.
+;                  $sPassword           - Oracle user password.
+;                  $sDataBase           - Oracle database name, service name, SID, or other provider-specific database identifier.
+;                  $sDriver             - [optional] ODBC/OLE DB provider or driver name. Default is Default.
+;                  $sServer             - [optional] Oracle server or host name. Default is Default.
+;                  $sPort               - [optional] Oracle listener port. Default is Default.
 ; Return values .: None
 ; Author ........: mLipok
 ; Modified ......:
-; Remarks .......: @WIP
-; Related .......:
-; Link ..........:
+; Remarks .......: Work on this function is currently stalled; the body is intentionally left as a non-working placeholder.
+;                  Do not use this function in production until the Oracle provider/driver syntax is completed and tested.
+; Related .......: _ADO_Connection_OpenConString
+; Link ..........: https://www.connectionstrings.com/oracle/
 ; Example .......: No
 ; ===============================================================================================================================
 Func _ADO_ConnectionString_Oracle($sUser, $sPassword, $sDataBase, $sDriver = Default, $sServer = Default, $sPort = Default)
