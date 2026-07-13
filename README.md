@@ -12,14 +12,15 @@ The repository import is intended to preserve that public release as a GitHub-ho
 
 ## Documentation
 
-Project documentation is available in [`docs/`](docs/README.md), including:
+Project documentation is available in [`docs/`](docs/README.md):
 
-- getting started,
-- connection strings,
-- providers and drivers,
-- recordset handling,
-- API overview,
-- troubleshooting and references.
+- [Getting started](docs/getting-started.md)
+- [Connection strings](docs/connection-strings.md)
+- [Providers and drivers](docs/providers-and-drivers.md)
+- [Recordsets and query results](docs/recordsets.md)
+- [API overview](docs/api-overview.md)
+- [Troubleshooting](docs/troubleshooting.md)
+- [References and support](docs/links.md)
 
 ## Authors and contributors
 
