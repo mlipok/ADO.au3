@@ -10,6 +10,17 @@ This repository preserves the latest known public beta release of **ADO.au3 UDF*
 
 The repository import is intended to preserve that public release as a GitHub-hosted baseline for future maintenance, documentation cleanup, and further development.
 
+## Documentation
+
+Project documentation is available in [`docs/`](docs/README.md), including:
+
+- getting started,
+- connection strings,
+- providers and drivers,
+- recordset handling,
+- API overview,
+- troubleshooting and references.
+
 ## Authors and contributors
 
 ADO.au3 is maintained by mLipok and preserves the AutoIt community work and discussion related to the ADO.au3 UDF.
